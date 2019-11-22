@@ -50,7 +50,13 @@ uint8_t EspNowGeneric::peerCount() const {
 }
 
 void EspNowGeneric::clearPeers() {
-// To do
+  uint8_t *mac;
+
+  mac = esp_now_fetch_peer(true);
+  while (mac) {
+    esp_now_del_peer(mac);
+    mac = esp_now_fetch_peer(false);
+  }
 }
 
 bool EspNowGeneric::findPeer(const uint8_t *mac) {
